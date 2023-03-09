@@ -5,7 +5,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CarteiraGlobalJava</name>
 	<description>Automação_Carteira_Global_Java_Cucumber</description>
+	
+		
+	
 	<dependencies>
+		
+		
+		
+		
+		
 		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
 		<dependency>
 			<groupId>io.cucumber</groupId>

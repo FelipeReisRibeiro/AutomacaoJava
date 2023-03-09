@@ -2,14 +2,11 @@ package core;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -24,14 +21,15 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import elementos.HomePageElements;
 
 
 
 public class BaseSelenium {
-
 	
-	protected static String navegador = Browser.CHROME.toString();
-	private static long timeOut = 20;
+	String cenario = null;
+	private HomePageElements home = new HomePageElements();
+	
 	protected static String url = "https://www.carteiraglobal.com/";
 	private static String chromeAgent = "webdriver.chrome.driver";
 	private static String caminhoDoPrintErro = System.getProperty("user.dir") + File.separator +"target" + File.separator
@@ -40,102 +38,31 @@ public class BaseSelenium {
 			+ "screnshot" + File.separator + "PrintsConcluido" + File.separator;
 	private static String caminhoDriver = System.getProperty("user.dir") + File.separator + "src" + File.separator
 			+ "driver" + File.separator + "chromedriver.exe";
-	protected static WebDriver driver;
-	@SuppressWarnings("unused")
-	private static WebDriverWait wait;
+	public static WebDriver driver;
+	
+	//private static WebDriverWait webDriverWait;
 
 	public static void iniciaChrome() {
 		System.setProperty(chromeAgent, caminhoDriver);
 		driver = new ChromeDriver();
-		
-		
+		maximize();
 	}
-	
-	
+		
 	public static void inicializador() {
 		if (driver == null) {
 			iniciaChrome();
 		}
 	}
 
-	public static void fechaNavegador() {
+	public static void fechaNavegador() throws IOException  {
 		driver.quit();
-		
-		
-		
 	}
+	
 	public static void proximaAba() {
 		driver.switchTo().newWindow(WindowType.TAB);
 	}
+		
 	
-	
-	public static void fechaChrome() {
-		if (driver != null) {
-			if (System.getProperty("os.name").toLowerCase().contains("windows"))
-				finalizarNavegadorWindows();
-			else
-				finalizarNavegadorLinux();
-			driver = null;
-		}
-	}
-	
-	private static void finalizarNavegadorLinux() {
-		if (navegador.toUpperCase().equals("CHROME")) {
-			finalizarProcessoChromeLinux();
-		} else if (navegador.toUpperCase().equals("FIREFOX")) {
-			finalizarProcessoFirefox();
-		}
-	}
-	
-	
-	private static void finalizarNavegadorWindows() {
-		if (navegador.toUpperCase().equals("CHROME")) {
-			finalizarProcessoChrome();
-		} else if (navegador.toUpperCase().equals("FIREFOX")) {
-			finalizarProcessoFirefox();
-		}
-	}
-	
-	private static void finalizarProcessoChromeLinux() {
-		try {
-			Process process = Runtime.getRuntime().exec("pkill chrome");
-			@SuppressWarnings("resource")
-			Scanner leitor = new Scanner(process.getInputStream());
-			while (leitor.hasNextLine()) {
-				System.out.println(leitor.nextLine());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	private static void finalizarProcessoFirefox() {
-		try {
-			Process process = Runtime.getRuntime().exec("taskkill /f /im geckodriver.exe");
-			@SuppressWarnings("resource")
-			Scanner leitor = new Scanner(process.getInputStream());
-			while (leitor.hasNextLine()) {
-				System.out.println(leitor.nextLine());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	private static void finalizarProcessoChrome() {
-		try {
-			Process process = Runtime.getRuntime().exec("taskkill /f /im chromedriver.exe");
-			@SuppressWarnings("resource")
-			Scanner leitor = new Scanner(process.getInputStream());
-			while (leitor.hasNextLine()) {
-				System.out.println(leitor.nextLine());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	public WebElement procurar(By elemento) {
 		return driver.findElement(elemento);
 
@@ -172,7 +99,7 @@ public class BaseSelenium {
 
 	public void navegarParaUrl() {
 		driver.navigate().to(url);
-		maximize();
+		
 	}
 
 	public Navigation navegador() {
@@ -187,7 +114,7 @@ public class BaseSelenium {
 		navegador().back();
 	}
 
-	public void maximize() {
+	public static void maximize() {
 		driver.manage().window().maximize();
 	}
 
@@ -255,7 +182,7 @@ public class BaseSelenium {
 			return false;
 		}
 	}
-	public void tirarPrintDaTela() throws IOException {
+	public static void tirarPrintDaTela() throws IOException {
 		File print = ((TakesScreenshot) BaseSelenium.driver).getScreenshotAs(OutputType.FILE);
 		File destino = new File(caminhoDoPrintErro + "test" + new Random().nextInt(20) + ".png");
 		FileUtils.copyFile(print, destino);
@@ -267,7 +194,6 @@ public class BaseSelenium {
 		try {
 			FileUtils.copyFile(print, destino);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -293,16 +219,21 @@ public class BaseSelenium {
 				driver.switchTo().window((String) it[indice]);
 		}	
 		
-		public static WebDriver getDriver() {
+		public WebDriver getDriver() {
 			return driver;	
 		}
 		
 		public void moverParaElementoeClicar(WebElement elemento, String descricaoDoPasso) {
-			WebDriver driver = null;
-			Actions action = new Actions(((BaseSelenium) driver).getDriver());
+			Actions action = new Actions(((BaseSelenium)driver).getDriver());
 						action.moveToElement(elemento).click().perform();
 				
 		}
-			
+		
+		public void realizaLoginCG() {
+			escreveNoCampo(home.getCmp_user(), "userautomacaogit@gmail.com");
+			escreveNoCampo(home.getCmp_password(), "User@123");
+			esperarSerClicavel(home.getBtn_Submit());
+			clicar(home.getBtn_Submit());
+		}
 		
 }

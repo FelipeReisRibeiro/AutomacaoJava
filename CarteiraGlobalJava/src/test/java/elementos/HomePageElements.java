@@ -24,7 +24,6 @@ public class HomePageElements {
 	private By	Btn_Comparar =                  By.xpath("//button[@class='c-button c-button-primary'][contains(.,'Comparar')]");
 	private By	Btn_RankComp =                  By.xpath("//button[@class='c-button c-button-primary'][contains(.,'Ranking completo')]");
 	private By	Experimente;
-	private By	Btn_Experimente =               By.xpath("//span[contains(.,'${Experimente}')]");
 	private By	Btn_ExperimenteConheca =        By.xpath("//span[contains(.,'Conheça')]");
 	private By	Btn_ExperimenteCompare =        By.xpath("//span[contains(.,'compare')]");
 	private By	Btn_ExperimenteControle =       By.xpath("//span[contains(.,'Controle')]");
@@ -51,7 +50,7 @@ public class HomePageElements {
 	private By	Img_Evolução =                  By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fcontrole%2F3.dacf856b798ca2958418a59f4996eec5.png&w=3840&q=75'])[2]");
 	private By	Img_Performance =               By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fcontrole%2F4.d2acef71e9f4585c851f2fbb0107ceb3.png&w=3840&q=75'])[2]");
 	private By	Img_Financeiro =                By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fcontrole%2F5.4cca3e365fc841f49e3891dd9e40c181.png&w=3840&q=75'])[2]");
-	private By	Img_Rico =                      By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fcontrole%2F6.f6e8af401b4b710b97af2c2b667697bb.png&w=3840&q=75'])[2]");
+	private By	Img_Risco =                      By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fcontrole%2F6.f6e8af401b4b710b97af2c2b667697bb.png&w=3840&q=75'])[2]");
 	private By	Img_SimuladorCarteiras =        By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fconquiste%2F1.5dc0c39ee89d42135c9b5ba7a7a2a80a.png&w=3840&q=75'])[2]");
 	private By	Img_EstudoInvestimento =        By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fconquiste%2F2.460612d5fbf76eebf88561a408477ad2.png&w=3840&q=75'])[2]");
 	private By	Img_ComparadorCarteiras =       By.xpath("(//img[@src='/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fimages%2Fmodulos%2Fconquiste%2F3.3812d54503e9ebb78f7e87c40efe7c57.png&w=3840&q=75'])[2]");
@@ -154,12 +153,7 @@ public class HomePageElements {
 	public void setExperimente(By experimente) {
 		Experimente = experimente;
 	}
-	public By getBtn_Experimente() {
-		return Btn_Experimente;
-	}
-	public void setBtn_Experimente(By btn_Experimente) {
-		Btn_Experimente = btn_Experimente;
-	}
+	
 	public By getBtn_ExperimenteConheca() {
 		return Btn_ExperimenteConheca;
 	}
@@ -292,11 +286,11 @@ public class HomePageElements {
 	public void setImg_Financeiro(By img_Financeiro) {
 		Img_Financeiro = img_Financeiro;
 	}
-	public By getImg_Rico() {
-		return Img_Rico;
+	public By getImg_Risco() {
+		return Img_Risco;
 	}
-	public void setImg_Rico(By img_Rico) {
-		Img_Rico = img_Rico;
+	public void setImg_Risco(By img_Risco) {
+		Img_Risco = img_Risco;
 	}
 	public By getImg_SimuladorCarteiras() {
 		return Img_SimuladorCarteiras;
